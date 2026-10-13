@@ -112,8 +112,14 @@ async function startCamera() {
     try {
         cameraStatus.textContent = "Mengaktifkan kamera...";
         const stream = await navigator.mediaDevices.getUserMedia({
-            video: true,
+
+            video: {
+                facingMode: "user",
+                width: { ideal: 640 },
+                height: { ideal: 480 }
+            },
             audio: false
+
         });
         webcam.srcObject = stream;
         await webcam.play();

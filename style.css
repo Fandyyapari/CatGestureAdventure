@@ -873,3 +873,58 @@ body > p {
     line-height: 1.5;
     margin: 8px 0;
 }
+
+
+/* =================================
+   MOBILE RESPONSIVE
+================================= */
+
+@media (max-width: 768px) {
+
+    .main-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 12px auto;
+        padding: 0 10px;
+    }
+
+    .main-layout .game-container,
+    .main-layout .camera-container {
+        width: 100%;
+        max-width: none;
+        padding: 12px;
+        margin: 0;
+    }
+
+    #game-area {
+        height: 300px;
+    }
+
+    .camera-wrapper {
+        height: 180px;
+    }
+
+    #main-menu {
+        padding: 10px;
+    }
+
+    #main-menu h2 {
+        font-size: 19px;
+    }
+
+    .menu-instructions p {
+        font-size: 12px;
+        margin: 5px 0;
+    }
+
+    #score-display {
+        font-size: 11px;
+        padding: 7px;
+    }
+
+    #game-status {
+        font-size: 11px;
+        padding: 7px;
+    }
+}
