@@ -1,0 +1,875 @@
+/* ====================================
+   1. TAMPILAN DASAR
+==================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #10172a;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  margin: 25px 0 10px;
+  color: #42f5d1;
+}
+
+body > p {
+  margin: 0;
+  color: #cbd5e1;
+}
+
+/* ====================================
+   2. LAYOUT GAME DAN KAMERA
+==================================== */
+
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+
+  width: 100%;
+  max-width: 1350px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.game-container,
+.camera-container {
+  background: #1e293b;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 0;
+  min-width: 0;
+}
+
+.main-layout .game-container {
+  flex: 2;
+  width: auto;
+  max-width: none;
+}
+
+.main-layout .camera-container {
+  flex: 1;
+  width: auto;
+  max-width: none;
+}
+
+.game-container h2,
+.camera-container h2 {
+  margin-top: 5px;
+  font-size: 20px;
+}
+
+/* ====================================
+   3. AREA PERMAINAN
+==================================== */
+
+#game-area {
+  position: relative;
+  width: 100%;
+  height: 350px;
+
+  background: linear-gradient(to bottom, #87ceeb, #dff6ff);
+
+  border: 3px solid white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ====================================
+   4. KARAKTER PEMAIN
+==================================== */
+
+/* ================================
+   KARAKTER KUCING
+================================ */
+
+#player {
+  position: absolute;
+  left: 80px;
+  bottom: 40px;
+
+  width: 56px;
+  height: 58px;
+
+  background: linear-gradient(145deg, #f4a261, #e76f51);
+
+  border: 3px solid white;
+  border-radius: 16px 16px 14px 14px;
+  box-shadow: 0 5px 0 #b8543d;
+  z-index: 3;
+}
+
+/* kepala / wajah */
+.cat-face {
+  position: absolute;
+  inset: 0;
+}
+
+/* telinga */
+.cat-ear {
+  position: absolute;
+  top: -12px;
+  width: 18px;
+  height: 18px;
+
+  background: #e76f51;
+  border: 3px solid white;
+  z-index: 4;
+
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.left-ear {
+  left: 6px;
+  transform: rotate(-10deg);
+}
+
+.right-ear {
+  right: 6px;
+  transform: rotate(10deg);
+}
+
+/* mata */
+.cat-eyes {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.cat-eye {
+  width: 10px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  position: relative;
+}
+
+.cat-eye::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 7px;
+  background: #1f2937;
+  border-radius: 50%;
+  left: 3px;
+  top: 2px;
+}
+
+/* hidung */
+.cat-nose {
+  position: absolute;
+  top: 30px;
+  left: 23px;
+  width: 8px;
+  height: 6px;
+  background: #f8b4c0;
+  border-radius: 50% 50% 60% 60%;
+}
+
+/* mulut */
+.cat-mouth {
+  position: absolute;
+  top: 36px;
+  left: 20px;
+  width: 14px;
+  height: 8px;
+  border-bottom: 2px solid #6b2d1f;
+  border-radius: 0 0 50% 50%;
+}
+
+/* kumis */
+.cat-whiskers {
+  position: absolute;
+  top: 31px;
+  width: 16px;
+  height: 10px;
+}
+
+.cat-whiskers span {
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+}
+
+.left-whiskers {
+  left: 3px;
+}
+
+.left-whiskers span:nth-child(1) {
+  top: 0;
+  transform: rotate(-10deg);
+}
+
+.left-whiskers span:nth-child(2) {
+  top: 4px;
+}
+
+.left-whiskers span:nth-child(3) {
+  top: 8px;
+  transform: rotate(10deg);
+}
+
+.right-whiskers {
+  right: 3px;
+}
+
+.right-whiskers span:nth-child(1) {
+  top: 0;
+  transform: rotate(10deg);
+}
+
+.right-whiskers span:nth-child(2) {
+  top: 4px;
+}
+
+.right-whiskers span:nth-child(3) {
+  top: 8px;
+  transform: rotate(-10deg);
+}
+
+/* ekor */
+.cat-tail {
+  position: absolute;
+  width: 20px;
+  height: 8px;
+  background: #e76f51;
+  border: 2px solid white;
+  border-radius: 10px;
+  right: -14px;
+  bottom: 10px;
+  transform: rotate(25deg);
+  transform-origin: left center;
+}
+
+/* animasi lari tetap */
+#player.running {
+  animation: runAnimation 0.25s infinite alternate;
+}
+
+/* mode slide */
+#player.sliding {
+  width: 70px;
+  height: 32px;
+  border-radius: 18px;
+}
+
+#player.sliding .cat-ear {
+  top: -8px;
+  width: 14px;
+  height: 14px;
+}
+
+#player.sliding .cat-eyes {
+  top: 7px;
+}
+
+#player.sliding .cat-nose {
+  top: 18px;
+}
+
+#player.sliding .cat-mouth {
+  top: 23px;
+}
+
+#player.sliding .cat-whiskers {
+  top: 17px;
+}
+
+#player.sliding .cat-tail {
+  bottom: 6px;
+}
+
+/* mode pause */
+#player.paused {
+  background: linear-gradient(145deg, #b0b7c3, #8a94a6);
+  animation-play-state: paused;
+}
+
+/* Animasi berlari */
+#player.running {
+  animation: runAnimation 0.25s infinite alternate;
+}
+
+@keyframes runAnimation {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-6px);
+  }
+}
+
+/* Animasi menunduk */
+#player.sliding {
+  width: 65px;
+  height: 30px;
+  background: #0984e3;
+  border-radius: 15px;
+}
+
+/* Karakter berhenti */
+#player.paused {
+  animation-play-state: paused;
+  background: #95a5a6;
+}
+
+/* ====================================
+   5. TANAH
+==================================== */
+
+#ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 40px;
+
+  background: #27ae60;
+  border-top: 5px solid #145a32;
+  z-index: 1;
+}
+
+/* ====================================
+   6. RINTANGAN
+==================================== */
+
+/* Rintangan utama */
+#obstacle {
+  position: absolute;
+  left: 100%;
+
+  box-sizing: border-box;
+  border: 3px solid white;
+  border-radius: 6px;
+
+  z-index: 2;
+}
+
+/* Rintangan bawah untuk JUMP */
+#obstacle.obstacle-jump {
+  width: 35px;
+  height: 45px;
+  bottom: 40px;
+
+  background: #e17055;
+}
+
+/* Rintangan atas untuk SLIDE */
+#obstacle.obstacle-slide {
+  width: 70px;
+  height: 25px;
+  bottom: 85px;
+
+  background: #9b59b6;
+}
+
+/* ====================================
+   7. STATUS DAN SKOR
+==================================== */
+
+#game-status {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 5;
+
+  padding: 10px 15px;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 8px;
+
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#game-status.game-over {
+  background: #e74c3c;
+}
+
+#score-display {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 5;
+
+  padding: 10px 15px;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 8px;
+
+  color: #42f5d1;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* ====================================
+   8. TAMPILAN WEBCAM
+==================================== */
+
+.camera-wrapper {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  border: 3px solid #42f5d1;
+  border-radius: 10px;
+  background: #000;
+}
+
+#webcam {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+#hand-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  transform: scaleX(-1);
+  pointer-events: none;
+}
+
+#hand-status {
+  color: #facc15;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* ====================================
+   9. INFORMASI GESTUR
+==================================== */
+
+.gesture-info {
+  margin-top: 20px;
+  padding: 15px;
+
+  background: #0f172a;
+  border: 2px solid #334155;
+  border-radius: 10px;
+}
+
+.gesture-info h3 {
+  margin-top: 5px;
+  color: white;
+  font-size: 16px;
+}
+
+#gesture-name {
+  font-size: 28px;
+  font-weight: bold;
+  color: #42f5d1;
+  margin: 10px 0;
+}
+
+#gesture-action {
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+/* ====================================
+   10. TOMBOL DAN STATUS KAMERA
+==================================== */
+
+#camera-status {
+  color: #facc15;
+  font-size: 14px;
+}
+
+#start-camera {
+  padding: 12px 25px;
+  background: #42f5d1;
+  color: #10172a;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#start-camera:hover {
+  background: #20c9a8;
+}
+
+#start-camera:disabled {
+  opacity: 0.75;
+  cursor: default;
+}
+
+/* ====================================
+   11. RESPONSIVE
+==================================== */
+
+@media (max-width: 768px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .main-layout .game-container,
+  .main-layout .camera-container {
+    width: 100%;
+    flex: none;
+  }
+
+  #game-area {
+    height: 300px;
+  }
+
+  .camera-wrapper {
+    height: 250px;
+  }
+}
+
+/* =================================
+   SISTEM KOIN DAN LEVEL
+================================= */
+
+#coin {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+
+  left: 100%;
+  bottom: 125px;
+
+  border-radius: 50%;
+  border: 4px solid #fff3b0;
+
+  background: #fbbf24;
+  box-shadow: 0 0 15px #facc15;
+
+  z-index: 2;
+}
+
+/* Simbol bintang dalam koin */
+#coin::after {
+  content: "★";
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #a16207;
+  font-size: 15px;
+}
+
+/* Tampilan pemisah skor */
+.score-separator {
+  margin: 0 8px;
+  color: #64748b;
+}
+
+#coin-count {
+  color: #fbbf24;
+}
+
+#level {
+  color: #38bdf8;
+}
+
+/* ================================
+   BACKGROUND GAME
+================================ */
+
+#game-area {
+  background: linear-gradient(to bottom, #74c7ff 0%, #c9efff 75%, #e5faff 100%);
+
+  isolation: isolate;
+}
+
+/* Matahari */
+.sun {
+  position: absolute;
+  top: 35px;
+  right: 65px;
+
+  width: 65px;
+  height: 65px;
+
+  background: #ffe58f;
+  border-radius: 50%;
+
+  box-shadow: 0 0 35px #ffe58f;
+  z-index: 0;
+}
+
+/* Awan */
+.cloud {
+  position: absolute;
+
+  width: 100px;
+  height: 30px;
+
+  background: white;
+  border-radius: 50px;
+
+  opacity: 0.85;
+  z-index: 0;
+
+  animation: cloudMove 15s linear infinite;
+}
+
+.cloud::before {
+  content: "";
+  position: absolute;
+
+  width: 45px;
+  height: 45px;
+
+  background: white;
+  border-radius: 50%;
+
+  top: -20px;
+  left: 15px;
+}
+
+.cloud::after {
+  content: "";
+  position: absolute;
+
+  width: 55px;
+  height: 40px;
+
+  background: white;
+  border-radius: 50%;
+
+  top: -15px;
+  right: 10px;
+}
+
+.cloud-1 {
+  top: 70px;
+  left: 60px;
+}
+
+.cloud-2 {
+  top: 120px;
+  left: 350px;
+
+  animation-duration: 22s;
+}
+
+@keyframes cloudMove {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-180px);
+  }
+}
+
+/* Pegunungan */
+.mountain {
+  position: absolute;
+
+  width: 300px;
+  height: 190px;
+
+  background: #8acdb3;
+
+  clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+
+  z-index: 0;
+}
+
+.mountain-1 {
+  bottom: 40px;
+  left: 90px;
+}
+
+.mountain-2 {
+  bottom: 40px;
+  left: 320px;
+
+  background: #6cbea0;
+}
+
+/* Rintangan JUMP */
+#obstacle.obstacle-jump {
+  background: linear-gradient(135deg, #ff9a76, #d3543a);
+
+  border: 3px solid #fff;
+  box-shadow: 0 4px 0 #a33d2c;
+}
+
+/* Rintangan SLIDE */
+#obstacle.obstacle-slide {
+  background: linear-gradient(135deg, #bb79e8, #7d3caa);
+
+  border: 3px solid #fff;
+  box-shadow: 0 4px 0 #582783;
+}
+
+/* Animasi koin */
+#coin {
+  animation: coinGlow 1s ease-in-out infinite alternate;
+}
+
+@keyframes coinGlow {
+  from {
+    filter: brightness(1);
+    box-shadow: 0 0 8px #facc15;
+  }
+
+  to {
+    filter: brightness(1.3);
+    box-shadow: 0 0 20px #facc15;
+  }
+}
+
+
+/* ================================
+   TAHAP 11 - SISTEM PAUSE
+================================ */
+
+/* Menghentikan animasi karakter */
+#game-area.is-paused #player {
+    animation-play-state: paused;
+}
+
+/* Menghentikan animasi koin */
+#game-area.is-paused #coin {
+    animation-play-state: paused;
+}
+
+/* Menghentikan animasi awan */
+#game-area.is-paused .cloud {
+    animation-play-state: paused;
+}
+
+/* Tampilan ketika permainan berhenti */
+#game-area.is-paused::after {
+    content: "PAUSED";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: rgba(15, 23, 42, 0.75);
+    color: white;
+
+    padding: 15px 30px;
+    border-radius: 12px;
+
+    font-size: 24px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 10;
+}
+
+
+
+/* ================================
+   TAHAP 12 - MENU UTAMA
+================================ */
+
+
+#main-menu {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(15, 23, 42, 0.88);
+    z-index: 20;
+
+    padding: 20px;
+    color: white;
+
+    border-radius: 8px;
+    overflow: auto;
+}
+
+
+#main-menu h2 {
+    color: #42f5d1;
+    font-size: 25px;
+    margin: 5px 0 10px;
+}
+
+#main-menu > p {
+    font-size: 14px;
+    color: #cbd5e1;
+}
+
+.menu-instructions {
+    margin: 10px 0;
+    padding: 8px 20px;
+
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+}
+
+.menu-instructions p {
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+#play-button {
+    margin-top: 10px;
+    padding: 13px 28px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #42f5d1;
+    color: #10172a;
+
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#play-button:hover {
+    background: #24d9b2;
+    transform: scale(1.04);
+}
+
+#play-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#main-menu.hidden {
+    display: none;
+}
+
+
+.camera-instruction {
+    font-size: 13px;
+    color: #facc15;
+    max-width: 300px;
+    line-height: 1.5;
+    margin: 8px 0;
+}
