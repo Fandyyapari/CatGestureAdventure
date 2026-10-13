@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hand Gesture Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>HAND GESTURE GAME</h1>
+    <p>Game Computer Vision dengan gerakan tangan</p>
+
+    <!-- LAYOUT UTAMA -->
+    <div class="main-layout">
+
+        <!-- BAGIAN KIRI: ARENA GAME -->
+        <div class="game-container">
+
+            <h2>Area Permainan</h2>
+
+            <div id="game-area">
+
+                <!-- Background dekorasi -->
+                <div class="sun"></div>
+
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
+
+                <div class="mountain mountain-1"></div>
+                <div class="mountain mountain-2"></div>
+
+
+                <div id="game-status">
+                    GAME PAUSED
+                </div>
+
+
+                <div id="score-display">
+                    SCORE: <span id="score">0</span>
+                    <span class="score-separator">|</span>
+                    COINS: <span id="coin-count">0</span>
+                    <span class="score-separator">|</span>
+                    LVL: <span id="level">1</span>
+                </div>
+
+
+
+                <div id="player">
+
+                    <div class="cat-ear left-ear"></div>
+                    <div class="cat-ear right-ear"></div>
+
+                    <div class="cat-face">
+                        <div class="cat-eyes">
+                            <span class="cat-eye"></span>
+                            <span class="cat-eye"></span>
+                        </div>
+
+                        <div class="cat-nose"></div>
+                        <div class="cat-mouth"></div>
+
+                        <div class="cat-whiskers left-whiskers">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div class="cat-whiskers right-whiskers">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div class="cat-tail"></div>
+
+                </div>
+
+
+
+                <div id="obstacle" class="obstacle-jump"></div>
+
+                <div id="coin"></div>
+
+
+                <div id="ground"></div>
+
+            <!-- MENU UTAMA GAME -->
+            <div id="main-menu">
+
+                <h2>CAT GESTURE ADVENTURE</h2>
+
+                <p>
+                    Kendalikan kucing menggunakan
+                    gerakan tangan!
+                </p>
+
+                <div class="menu-instructions">
+
+                    <p>✊ Mengepal = RUN</p>
+
+                    <p>✋ Telapak Terbuka = JUMP</p>
+
+                    <p>✌️ Dua Jari = SLIDE</p>
+
+                    <p>📷 Tidak Ada Tangan = PAUSE</p>
+
+                </div>
+
+
+                <p class="camera-instruction">
+                    📷 Klik MULAI GAME untuk mengaktifkan kamera dan bermain.
+                </p>
+
+                <button id="play-button">
+                    ▶ MULAI GAME
+                </button>
+
+
+            </div>
+
+
+            </div>
+
+
+        </div>
+        <!-- AKHIR ARENA GAME -->
+
+
+        <!-- BAGIAN KANAN: COMPUTER VISION -->
+        <div class="camera-container">
+
+            <h2>Live Computer Vision</h2>
+
+            <div class="camera-wrapper">
+
+                <video id="webcam" autoplay playsinline muted>
+                </video>
+
+                <canvas id="hand-canvas"></canvas>
+
+            </div>
+
+            <p id="hand-status">
+                Menunggu deteksi tangan...
+            </p>
+
+            <div class="gesture-info">
+
+                <h3>Gestur Terdeteksi</h3>
+
+                <p id="gesture-name">
+                    BELUM TERDETEKSI
+                </p>
+
+                <p id="gesture-action">
+                    Arahkan tangan ke kamera
+                </p>
+
+            </div>
+
+            <p id="camera-status">
+                Kamera belum aktif
+            </p>
+
+            <button id="start-camera">
+                Aktifkan Kamera
+            </button>
+
+        </div>
+        <!-- AKHIR COMPUTER VISION -->
+
+    </div>
+    <!-- AKHIR MAIN LAYOUT -->
+
+
+    <!-- Library MediaPipe Hands -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+
+    <!-- Library MediaPipe Drawing Utils -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+
+    <!-- JavaScript utama -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
